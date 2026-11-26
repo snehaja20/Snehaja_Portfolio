@@ -1,6 +1,6 @@
 /* DM3014 Interactive Devices, Snehaja 2026
  * Week 5 - Computer Vision
- * Project Name: "FIREEE". The webcam draws the fire emoji based on the detected movement. 
+ * Project Name: "FIREEE". The webcam draws the fire emoji on the screen based on the detected movement. 
  The fire emoji also changes its tint to red as it starts to fade away when motion is not detected anymore (there are 2 states, active and inactive)  
  Claude code was used to colourise the emoji, using the tint() function. 
  */
