@@ -1,0 +1,81 @@
+<!-- DM3014 Interactive Devices, Snehaja 2026
+  -- Week 3 - Net Art
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sculpture As 100 Hyperlinks</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+</head>
+<body>
+<script>
+  // ------------------------------------------------------------------
+  // EDIT ME
+  // One object per hyperlink on the page:
+  //   x, y   -> where it sits on the page, in pixel coordinates
+  //   label  -> the clickable text
+  //   url    -> where it links to
+  //   w, h   -> (optional) popup window size for this link only.
+  //             leave them out and it uses defaultWidth/defaultHeight below
+  //
+  // To add a link: copy any line, change the values, add a comma.
+  // To remove a link: delete its line.
+ 
+  let links = [
+  { x: 380, y: 60, label: "Love01", url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOpeo5qmYyUnsJ6CDakgenqRXPRE0yY-xeTLAonG-LQ20rQeb5zo3UXTk&s=10", w: 600, h: 600 },
+  { x: 440, y: 60, label: "Love02", url: "https://i.natgeofe.com/k/3e5aee28-56fa-4cd1-8383-7c264aa13117/ww-hearts-nature-swans.jpg", w: 600, h: 600 },
+  { x: 480, y: 90, label: "Love03", url: "https://i.pinimg.com/236x/66/c1/74/66c174b3cc044d913b19b3694f58bc0c.jpg", w: 600, h: 600 },
+  { x: 530, y: 120, label: "Love04", url: "https://i.pinimg.com/1200x/1d/01/ac/1d01ac122e675c8f01c3d2e3cb93ebf2.jpg", w: 600, h: 600 },
+  { x: 580, y: 90, label: "Love05", url: "https://i.pinimg.com/1200x/6a/81/26/6a81261f8aaccb21084d09f9b07fd402.jpg", w: 600, h: 600 },
+  { x: 380, y: 260, label: "Love06", url: "https://i.pinimg.com/736x/d3/61/1d/d3611dbf25cf02ec2ef2e89361302d18.jpg", w: 600, h: 600 },
+  { x: 400, y: 300, label: "Love07", url: "https://i.pinimg.com/736x/3e/d5/e3/3ed5e3b700ca68ed51c73f056cdc4a28.jpg", w: 600, h: 600 },
+  { x: 450, y: 340, label: "Love08", url: "https://i.pinimg.com/736x/89/a2/8d/89a28d00ad497ae87dd15105eef1240e.jpg", w: 600, h: 600 },
+  { x: 330, y: 100, label: "Love09", url: "https://i.pinimg.com/736x/01/71/39/0171396b12388ad4309f8821f3559928.jpg", w: 600, h: 600 },
+  { x: 310, y: 140, label: "Love10", url: "https://i.pinimg.com/1200x/e6/52/1c/e6521c313a3e2fe9927e3ec346046e5b.jpg", w: 600, h: 600 },
+  { x: 330, y: 180, label: "Love11", url: "https://i.pinimg.com/1200x/24/87/e8/2487e88569587377ed062c01309d8fec.jpg", w: 600, h: 600 },
+  { x: 350, y: 220, label: "Love12", url: "https://i.pinimg.com/1200x/44/42/0c/44420c438023adb9c30d87c14130dab2.jpg", w: 600, h: 600 },
+  { x: 530, y: 380, label: "Love13", url: "https://i.pinimg.com/736x/b0/be/af/b0beaf8f3a24f5f729e855d957bce8cb.jpg", w: 600, h: 600 },
+  { x: 630, y: 60, label: "Love14", url: "https://i.pinimg.com/1200x/9a/57/8a/9a578a075730239469cb03b8fb01d707.jpg", w: 600, h: 600 },
+  { x: 700, y: 60, label: "Love15", url: "https://i.pinimg.com/1200x/04/fe/53/04fe53d04760b33552a71894186e527c.jpg", w: 600, h: 600 },
+{ x: 730, y: 100, label: "Love16", url: "https://i.pinimg.com/736x/5f/c1/68/5fc168d140173ca26fd3f2b132bf3617.jpg", w: 600, h: 600 },
+{ x: 760, y: 140, label: "Love17", url: "https://i.pinimg.com/736x/75/bd/fd/75bdfd7f2b4e27f4177ebb6aa5b30b3b.jpg", w: 600, h: 600 },
+ { x: 730, y: 180, label: "Love18", url: "https://i.pinimg.com/1200x/34/84/2f/34842fa4d3064abdd126b511fe5d54d3.jpg", w: 600, h: 600 },
+ { x: 710, y: 220, label: "Love19", url: "https://i.pinimg.com/1200x/f1/02/04/f102045d27be7a2eedae96548b5931f2.jpg", w: 600, h: 600 },
+ { x: 680, y: 260, label: "Love20", url: "https://i.pinimg.com/736x/07/1b/47/071b475c42f06b227815309070a16401.jpg", w: 600, h: 600 },
+ { x: 650, y: 300, label: "Love21", url: "https://i.pinimg.com/736x/dc/be/1d/dcbe1da740e770a46fe68c0668a98900.jpg", w: 600, h: 600 },
+ { x: 610, y: 340, label: "Love22", url: "https://i.pinimg.com/736x/0f/f3/7b/0ff37b181af2f804f98387b88bfdf05e.jpg", w: 600, h: 600 },
+
+
+  ];
+  // ------------------------------------------------------------------
+  
+  // popup size used for any link that doesn't set its own w/h
+  let defaultWidth = 500;
+  let defaultHeight = 600;
+
+  function setup() {
+    noCanvas(); // this page only places links, so we don't need a canvas
+    for (let i = 0; i < links.length; i++) {
+      let link = links[i];
+      let a = createA('javascript:void(0)', link.label);
+      a.position(link.x, link.y);
+      a.mousePressed(() => openPopup(link));
+    }
+  }
+
+  // opens a link in its own small popup window
+  function openPopup(link) {
+    let w = link.w || defaultWidth;
+    let h = link.h || defaultHeight;
+    window.open(
+      link.url,
+      '_blank',
+      `width=${w},height=${h},left=100,top=50,resizable=yes,scrollbars=yes`
+    );
+  }
+
+</script>
+</body>
+</html>
